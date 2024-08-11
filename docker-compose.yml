@@ -1,0 +1,44 @@
+services:
+  db_postgres:
+    # Использование готового образа postgres
+    image: postgres:latest
+    # Задание имени контейнера для сервиса
+    container_name: postgres
+    # Задание переменных окружения для контейнера с postgres
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      #POSTGRES_HOST: 'localhost'
+    ports:
+      - "5432:5432"
+    # Связывание тома с директорией в контейнере для сохранения данных postgres
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  django:
+    # Сборка образа для сервиса django из текущей директории (по файлу dockerfile)
+    build: ./app
+    container_name: django_app
+    ports:
+      - "8001:8000"
+    # Зависимость от другого сервиса (в данном слуачае БД)
+    depends_on:
+      - db_postgres
+    environment:
+      DEBUG: "False"
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_HOST: ${DATABASE_HOST}
+      POSTGRES_PORT: ${DATABASE_PORT}
+    env_file:
+      - .env
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
+
+# глобальные переменные которые мы шарим для всех контейеров
+volumes:
+  static_volume:
+  media_volume:
