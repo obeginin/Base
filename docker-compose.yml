@@ -38,6 +38,7 @@ services:
       - static_volume:/app/static
       - media_volume:/app/media
 
+
 # глобальные переменные которые мы шарим для всех контейеров
 volumes:
   static_volume:
