@@ -36,7 +36,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=15, unique=True, verbose_name='Мобильный телефон')
     email = models.EmailField(unique=True, verbose_name='Электронная почта')
     is_active = models.BooleanField(default=True) # проверка активности польовтеля
-    is_staff = models.BooleanField(default=False) # является ли пользователь сотрудником (имеет доступ к административному интерфейсу).
+    is_staff = models.BooleanField(default=False, verbose_name='админ') # является ли пользователь сотрудником (имеет доступ к административному интерфейсу).
 
     objects = UserManager()
 

@@ -9,17 +9,18 @@ class MyUserAdmin(BaseUserAdmin):
 
 # Поля, доступные для редактирования в форме добавления и редактирования
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
         ('Личная информция', {'fields': ('first_name', 'last_name')}),
-        ('Разрешения', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        ('Даты', {'fields': ('last_login', 'date_joined')}),
+        (None, {'fields': ('email', 'password')}),
+        ('Разрешения', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
+        #('Разрешения', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        #('Даты', {'fields': ('last_login')}),
     )
 
 # add_fieldsets Определяет поля для формы добавления нового пользователя
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('login', 'email', 'last_name', 'first_name', 'password1', 'password2', 'is_staff'),
+            'fields': ('login', 'email', 'phone_number', 'last_name', 'first_name', 'password1', 'password2', 'is_staff'),
         }),
     )
 
