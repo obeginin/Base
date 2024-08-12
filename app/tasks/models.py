@@ -1,4 +1,8 @@
+# tasks/models.py в данном файле описывем модели для хранения "задач" в базе данных
 from django.db import models
+from django.core.exceptions import ValidationError # обработчик ошибок
+from django.utils.translation import gettext_lazy as _
+
 
 # создаём модель для Задач
 class Task(models.Model):
@@ -21,20 +25,33 @@ class Task(models.Model):
         ('Statgrad_24', 'Статград_24'),
         ('Kabanov', 'Кабанов'),
         ('Polyakov', 'Поляков'),
+        ('Other', 'Другое'),
     ]
-    # аргумент choices создает форму с выбором вариант'''
+    # аргументы и атрибуты:
+    # blank=True указывает, что поле может оставаться пустым в формах, а также не будет требоваться для заполнения.
+    # null=True покывет что поле может хранить NULL в базе данных
+    # choices=CATEGORY_CHOICES создает форму с выбором вариант из списка CATEGORY_CHOICES
+    # verbose_name дает название полям
+    # unique=True гарантирует что зачение в БД будет унииальным
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, verbose_name='Категория')
     resour = models.CharField(max_length=20, choices=resour_CHOICES, verbose_name='Ресурс')
-    number = models.PositiveIntegerField( verbose_name='№') # положительное целое число
-    image = models.ImageField(upload_to='tasks_images/', verbose_name='Задание') # изображение
-    solution = models.ImageField(upload_to='tasks_images/' , verbose_name='Решение')
-    answer = models.CharField(max_length=20, verbose_name='Ответ') # атрибут verbose_name создает подсказку пользовтелю
+    number = models.PositiveIntegerField(unique=True, verbose_name='№') # положительное целое число
+    image = models.ImageField(upload_to='tasks_images/', verbose_name='Задание', blank=True, null=True) # изображение
+    solution = models.ImageField(upload_to='tasks_images/' , verbose_name='Решение', blank=True, null=True)
+    answer = models.CharField(max_length=20, verbose_name='Ответ', blank=True, null=True) # атрибут verbose_name создает подсказку пользовтелю
 
 
 # с помощью класса Мета мы ограничиваем уникальность.
-# это означает что комбинацией полей категория и номер не могут повторяться в БД
+# unique_together  означает что комбинацией полей категория и номер не могут повторяться в БД
+# ordering  Задает порядок сортировки объектов при выполнении запросов к базе данных.
     class Meta:
         unique_together = ('category', 'number')
+        ordering = ['category', 'number'] # сначала будет сортировка по category, а затем по number внутри каждой категории.
+
+# Фунция котоая провеяет: если мользователь ввел число не 4-х значное, то очистит форму
+    def clean(self):
+        if self.number < 1000 or self.number > 9999:
+            raise ValidationError(_('Номер должен быть 4-х значный!'))
 
 # Магический метод str возвращает строковое представление любого объекта.
     def __str__(self):

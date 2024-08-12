@@ -7,3 +7,15 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = '__all__'
+
+        extra_kwargs = {
+            # указывем какие поля не обязательные
+            'image': {'required': False},
+            'solution': {'required': False},
+            'answer': {'required': False},
+        }
+# делаем проверку на 4-х значное число в № задания(number)
+    def validate_number(self, value):
+        if value < 1000 or value > 9999:
+            raise serializers.ValidationError('The number must be a 4-digit integer.')
+        return value

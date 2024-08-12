@@ -28,15 +28,16 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.admin', # админка
+    'django.contrib.auth', # регистрация, аутентификации, авторизации и управления пользователями.
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    'django.contrib.sessions', # управляет сессиями пользователя
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'app',
-    'tasks',
+    'django.contrib.staticfiles', # управления статическими файлами
+    'rest_framework', # прложени для API
+    'app', # приложение основное
+    'tasks', # приложение задачи
+    'users', # приложение польователи
 ]
 
 MIDDLEWARE = [
