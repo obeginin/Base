@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'users', # приложение польователи
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -73,8 +74,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'app.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+LOGIN_USERNAME_FIELDS = ['login']
+#ACCOUNT_AUTHENTICATION_METHOD = 'login'
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+#AUTH_USER_MODEL = 'users.User'
+
 
 DATABASES = {
     'default': {

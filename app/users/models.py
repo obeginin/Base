@@ -11,7 +11,7 @@ class UserManager(BaseUserManager):
     def create_user(self, login, password=None, **extra_fields): # логин и пароль обятельные аргументы, **extra_fields означает что могут быть переданы и другие аргументы
         if not login:
             raise ValueError('Логин должен быть указан')
-        user = self.model(login=login,  **extra_fields) # Создает пользователя с указанным email и дополнительными полями
+        user = self.model(login=login, **extra_fields) # Создает пользователя с указанным email и дополнительными полями
         #email = self.normalize_email(email)  # приводит email к стандартному виду, делает его строчным)
         user.set_password(password) # Устанавливает пароль (хеширует его). даный метод set_password() принадлеит классу AbstractBaseUser
         user.save(using=self._db) # С помощью метода save() Сохраняеем экземпляр пользователя в базе данных.
