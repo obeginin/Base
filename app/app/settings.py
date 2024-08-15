@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles', # управления статическими файлами
     'rest_framework', # прложени для API
+    'rest_framework.authtoken', # Для работы с токенами
     'app', # приложение основное
     'tasks', # приложение задачи
     'users', # приложение польователи
@@ -73,11 +74,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'app.wsgi.application'
+# говорим Django использовать вместо стандартной модели user, нашу заданную в models.py
 
-LOGIN_USERNAME_FIELDS = ['login']
+AUTH_USER_MODEL = 'users.User'
+
+#LOGIN_USERNAME_FIELDS = ['login']
+#USERNAME_FIELD = 'login'
 #ACCOUNT_AUTHENTICATION_METHOD = 'login'
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-#AUTH_USER_MODEL = 'users.User'
+#ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
 
 
 DATABASES = {

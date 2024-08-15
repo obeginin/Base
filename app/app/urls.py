@@ -10,5 +10,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),     # Стандартный URL для административного интерфейса
-    path('api/', include('tasks.urls')),  # Добавление маршрутов API
+    path('api/', include('tasks.urls')),  # Добавление маршрутов API для задач
+    path('api/', include('users.urls')),  # подключаем маршруты API для users
 ]
