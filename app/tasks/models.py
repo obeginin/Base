@@ -2,8 +2,9 @@
 from django.db import models
 from django.core.exceptions import ValidationError # обработчик ошибок
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
 
-from users.models import User
+User = get_user_model()
 
 # создаём модель для Задач
 class Task(models.Model):

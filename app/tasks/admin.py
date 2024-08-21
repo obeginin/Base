@@ -14,7 +14,7 @@ class MyUserTaskAdmin(admin.ModelAdmin):
 # Поля, отображаемые в списке пользователей в админке
     list_display = ('user',)
 
-admin.site.register(UserTask, MyUserTaskAdmin)
+admin.site.register(UserTask)
 
 '''
 
