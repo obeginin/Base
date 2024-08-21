@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User
+#from tasks.models import UserTask
 from tasks.models import UserTask
 
 '''
@@ -14,7 +15,6 @@ class MyUserAdmin(BaseUserAdmin):
     list_display = ('login', 'last_name', 'first_name', 'email', 'phone_number', 'is_active', 'is_staff')
     list_filter = ('is_staff', 'last_name') # фильтры с правой стороны
     #inlines = [UserTaskInline]  # Добавляем связанные задачи в админку пользователей
-
 # Поля, доступные для редактирования в форме добавления и редактирования
     fieldsets = (
         ('Личная информция', {'fields': ('first_name', 'last_name')}),
@@ -41,4 +41,3 @@ class MyUserAdmin(BaseUserAdmin):
 
 # Регистрация модели и ее администратора
 admin.site.register(User, MyUserAdmin)
-

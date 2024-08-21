@@ -1,10 +1,5 @@
-# tasks/admin.py
-
 from django.contrib import admin
 from .models import Task, UserTask
-
-#from users.models import User
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
 class TaskAdmin(admin.ModelAdmin):
@@ -13,24 +8,28 @@ class TaskAdmin(admin.ModelAdmin):
     search_fields = ('number', 'resour')  # Поля для поиска
     list_filter = ('category', 'resour', 'number', )  # Фильтрация по названию задачи
 
-
 admin.site.register(Task, TaskAdmin)
-
 
 class MyUserTaskAdmin(admin.ModelAdmin):
 # Поля, отображаемые в списке пользователей в админке
     list_display = ('user',)
 
-admin.site.register(UserTask, MyUserTaskAdmin)
-'''
-# Отображение задач-пользователей в Админке ()
-class MyUserTaskAdmin(BaseUserAdmin):
-# Поля, отображаемые в списке пользователей в админке
-    #list_display = ('user_login', 'tasks_number', 'tasks_image', 'completed', 'answer_user', 'tasks_answer', 'solution_user', 'tasks_solution')
-    list_display = ('user',)
-    #list_filter = ('user_login') # фильтры с правой стороны
-    #inlines = [UserTaskInline]  # Добавляем связанные задачи в админку пользователей
+admin.site.register(UserTask)
 
 '''
 
+@admin.register(Task)
+
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')  # Поля, которые будут отображаться в списке
+    search_fields = ('name',)  # Поля для поиска в админке
+
+
+admin.site.register(Task)
+
+@admin.register(Task)
+class MyModelAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description')
+    search_fields = ('name',)
+    '''
 

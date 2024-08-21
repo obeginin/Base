@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-
 # создаём модель для Задач
 class Task(models.Model):
     # AutoField()- автоназначение для первичного ключа.
@@ -64,7 +63,6 @@ class Task(models.Model):
         return f"{self.category}_{self.number}"
         #return self.name'''
 
-# Связывем пользователей и задачи с пощю внешних ключей
 
 class UserTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_tasks', null=True)
