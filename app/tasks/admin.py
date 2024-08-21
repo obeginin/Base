@@ -12,9 +12,14 @@ admin.site.register(Task, TaskAdmin)
 
 class MyUserTaskAdmin(admin.ModelAdmin):
 # Поля, отображаемые в списке пользователей в админке
-    list_display = ('user',)
+    list_display = ('user', 'task', 'completed', 'answer_user', 'solution_user')
 
-admin.site.register(UserTask)
+# Методы для отображения полей из связанных моделей
+    def tasks_image(self, obj):
+        return obj.user.image
+    tasks_image.short_description = 'image'
+
+admin.site.register(UserTask, MyUserTaskAdmin)
 
 '''
 

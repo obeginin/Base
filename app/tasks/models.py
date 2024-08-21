@@ -63,7 +63,6 @@ class Task(models.Model):
         return f"{self.category}_{self.number}"
         #return self.name'''
 
-
 class UserTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_tasks', null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_solutions', null=True)
