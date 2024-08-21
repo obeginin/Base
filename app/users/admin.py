@@ -6,7 +6,7 @@ class MyUserAdmin(BaseUserAdmin):
 # Поля, отображаемые в списке пользователей в админке
     list_display = ('login', 'last_name', 'first_name', 'email', 'phone_number', 'is_active', 'is_staff')
     list_filter = ('is_staff', 'last_name') # фильтры с правой стороны
-
+    #inlines = [UserTaskInline]  # Добавляем связанные задачи в админку пользователей
 # Поля, доступные для редактирования в форме добавления и редактирования
     fieldsets = (
         ('Личная информция', {'fields': ('first_name', 'last_name')}),

@@ -1,6 +1,20 @@
 from django.contrib import admin
-from .models import Task
-admin.site.register(Task)
+from .models import Task, UserTask
+
+
+class TaskAdmin(admin.ModelAdmin):
+    # Поля, отображаемые в списке пользователей в админке
+    list_display = ('category', 'resour', 'number', 'image', 'solution', 'answer')  # Поля, которые будут отображаться в списке задач
+    search_fields = ('number', 'resour')  # Поля для поиска
+    list_filter = ('category', 'resour', 'number', )  # Фильтрация по названию задачи
+
+admin.site.register(Task, TaskAdmin)
+
+class MyUserTaskAdmin(admin.ModelAdmin):
+# Поля, отображаемые в списке пользователей в админке
+    list_display = ('user',)
+
+admin.site.register(UserTask, MyUserTaskAdmin)
 
 '''
 
