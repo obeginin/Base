@@ -11,7 +11,7 @@ from .serializers import TaskSerializer # мпорт сериализатора
 # partial_update: Частично обновить объект.
 # destroy: Удалить объект.
 
-# ModelViewSet автоматически связывается с URL-адресами, если вы используете маршрутизатор в вашем urls.py
+# ModelViewSet автоматически связывается с URL-адресами, если вы используете маршрутизатор в вашем urls.pyS
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all() # берем все аобъекты нашей модели Task
     serializer_class = TaskSerializer

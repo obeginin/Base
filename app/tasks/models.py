@@ -2,6 +2,9 @@
 from django.db import models
 from django.core.exceptions import ValidationError # обработчик ошибок
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 # создаём модель для Задач
@@ -15,11 +18,14 @@ class Task(models.Model):
         ('EGE_03', 'ЕГЭ_03'),
         ('EGE_04', 'ЕГЭ_04'),
         ('EGE_05', 'ЕГЭ_05'),
+        ('EGE_06', 'ЕГЭ_06'),
+        ('EGE_07', 'ЕГЭ_07'),
+        ('EGE_08', 'ЕГЭ_08'),
     ]
 
     resour_CHOICES = [
         ('Demo_24', 'Демо_24'),
-        ('Demo_24', 'Демо_24'),
+        ('Demo_23', 'Демо_23'),
         ('tester_24', 'Пробник_24'),
         ('Base(main)_24', 'Основной_24'),
         ('Statgrad_24', 'Статград_24'),
@@ -48,7 +54,7 @@ class Task(models.Model):
         unique_together = ('category', 'number')
         ordering = ['category', 'number'] # сначала будет сортировка по category, а затем по number внутри каждой категории.
 
-# Фунция котоая провеяет: если мользователь ввел число не 4-х значное, то очистит форму
+# Фунция котоая проверяет: если мользователь ввел число не 4-х значное, то очистит форму
     def clean(self):
         if self.number < 1000 or self.number > 9999:
             raise ValidationError(_('Номер должен быть 4-х значный!'))
@@ -57,3 +63,17 @@ class Task(models.Model):
     def __str__(self):
         return f"{self.category}_{self.number}"
         #return self.name'''
+
+# Связывем пользователей и задачи с пощю внешних ключей
+
+class UserTask(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_tasks', null=True)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_solutions', null=True)
+    solution_user = models.ImageField(upload_to='tasks_images/' , verbose_name='Решение пользователя', null=True)
+    answer_user = models.CharField(max_length=20, verbose_name='Ответ пользователя', null=True)
+    completed = models.BooleanField(default=False)  # Добавим поле для отслеживания выполнения задания
+
+    class Meta:
+        unique_together = ('user', 'task')  # Уникальность задания для каждого пользователя
+    def __str__(self):
+        return f'{self.user.login} - {self.task.number}'
