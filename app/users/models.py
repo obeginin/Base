@@ -31,8 +31,7 @@ class UserManager(BaseUserManager):
 # Основная модель для пользователя.
 class User(AbstractBaseUser, PermissionsMixin):
     login = models.CharField(max_length=30, unique=True, verbose_name='Логин')
-# USERNAME_FIELD Django использует login как имя пользователя для аутентификации.
-    USERNAME_FIELD = 'login'
+
     last_name = models.CharField(max_length=255, verbose_name='Фамилия') # Фамилия
     first_name = models.CharField(max_length=255, verbose_name='Имя') # Имя
     phone_number = models.CharField(max_length=15, unique=True, verbose_name='Мобильный телефон')
@@ -41,6 +40,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False, verbose_name='админ') # является ли пользователь сотрудником (имеет доступ к административному интерфейсу).
 
     objects = UserManager()
+# USERNAME_FIELD Django использует login как имя пользователя для аутентификации.
+    USERNAME_FIELD = 'login'
 # REQUIRED_FIELDS Эти поля являются обязательными при создании суперпользователя через команду createsuperuser .
     REQUIRED_FIELDS = ['first_name', 'last_name']
 

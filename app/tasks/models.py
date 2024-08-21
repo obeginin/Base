@@ -66,9 +66,9 @@ class Task(models.Model):
 class UserTask(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_tasks', null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_solutions', null=True)
-    solution_user = models.ImageField(upload_to='tasks_images/' , verbose_name='Решение пользователя', null=True)
+    solution_user = models.ImageField(upload_to='tasks_images/', verbose_name='Решение пользователя', null=True)
     answer_user = models.CharField(max_length=20, verbose_name='Ответ пользователя', null=True)
-    completed = models.BooleanField(default=False)  # Добавим поле для отслеживания выполнения задания
+    completed = models.BooleanField(default=False, verbose_name='Выполнено')  # Добавим поле для отслеживания выполнения задания
 
     class Meta:
         unique_together = ('user', 'task')  # Уникальность задания для каждого пользователя

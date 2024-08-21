@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Task, UserTask
+#from app.users imp
 
 
 class TaskAdmin(admin.ModelAdmin):
@@ -12,29 +13,24 @@ admin.site.register(Task, TaskAdmin)
 
 class MyUserTaskAdmin(admin.ModelAdmin):
 # Поля, отображаемые в списке пользователей в админке
-    list_display = ('user', 'task', 'completed', 'answer_user', 'solution_user')
-
+    list_display = ('user', 'task', 'completed', 'answer_user', 'task_answer', 'solution_user', 'task_solution', 'task_image')
+    list_filter = ('user', 'task', 'completed')
 # Методы для отображения полей из связанных моделей
-    def tasks_image(self, obj):
-        return obj.user.image
-    tasks_image.short_description = 'image'
+# указывается название модели_название поля
+    def task_image(self, obj):
+        return obj.task.image # возвращаем значение из модели
+    task_image.short_description = 'Задание' # задаем название для подписи столбца
+
+    def task_answer(self, obj):
+        return obj.task.answer
+    task_answer.short_description = 'Ответ задачи'
+
+    def task_solution(self, obj):
+        return obj.task.solution
+    task_solution.short_description = 'решение'
+
 
 admin.site.register(UserTask, MyUserTaskAdmin)
 
-'''
 
-@admin.register(Task)
-
-class TaskAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')  # Поля, которые будут отображаться в списке
-    search_fields = ('name',)  # Поля для поиска в админке
-
-
-admin.site.register(Task)
-
-@admin.register(Task)
-class MyModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
-    search_fields = ('name',)
-    '''
 
