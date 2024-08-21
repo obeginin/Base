@@ -3,6 +3,7 @@ from django.db import models
 from django.core.exceptions import ValidationError # обработчик ошибок
 from django.utils.translation import gettext_lazy as _
 
+from users.models import User
 
 # создаём модель для Задач
 class Task(models.Model):
@@ -57,3 +58,16 @@ class Task(models.Model):
     def __str__(self):
         return f"{self.category}_{self.number}"
         #return self.name'''
+
+
+class UserTask(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_tasks', null=True)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name='task_solutions', null=True)
+    solution_user = models.ImageField(upload_to='tasks_images/' , verbose_name='Решение пользователя', null=True)
+    answer_user = models.CharField(max_length=20, verbose_name='Ответ пользователя', null=True)
+    completed = models.BooleanField(default=False)  # Добавим поле для отслеживания выполнения задания
+
+    class Meta:
+        unique_together = ('user', 'task')  # Уникальность задания для каждого пользователя
+    def __str__(self):
+        return f'{self.user.login} - {self.task.number}'
