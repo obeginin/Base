@@ -1,20 +1,22 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User
-#from tasks.models import UserTask
 from tasks.models import UserTask
 
-'''
+
+
 class UserTaskInline(admin.TabularInline):
     model = UserTask
     extra = 0  # Убирает пустые строки для новых задач
-'''
+
 # Отображение пользователей в Админке (users)
 class MyUserAdmin(BaseUserAdmin):
 # Поля, отображаемые в списке пользователей в админке
     list_display = ('login', 'last_name', 'first_name', 'email', 'phone_number', 'is_active', 'is_staff')
     list_filter = ('is_staff', 'last_name') # фильтры с правой стороны
-    #inlines = [UserTaskInline]  # Добавляем связанные задачи в админку пользователей
+
+    inlines = [UserTaskInline]  # Добавляем связанные задачи в админку пользователей
+
 # Поля, доступные для редактирования в форме добавления и редактирования
     fieldsets = (
         ('Личная информция', {'fields': ('first_name', 'last_name')}),
@@ -38,6 +40,8 @@ class MyUserAdmin(BaseUserAdmin):
 
 # filter_horizontal: Определяет, какие поля будут отображаться с горизонтальными фильтрами (например, группы и разрешения).
     filter_horizontal = ('groups', 'user_permissions')
+
+#admin.site.unregister(User)
 
 # Регистрация модели и ее администратора
 admin.site.register(User, MyUserAdmin)

@@ -69,6 +69,21 @@ class UserTask(models.Model):
     solution_user = models.ImageField(upload_to='tasks_images/', verbose_name='Решение пользователя', null=True)
     answer_user = models.CharField(max_length=20, verbose_name='Ответ пользователя', null=True)
     completed = models.BooleanField(default=False, verbose_name='Выполнено')  # Добавим поле для отслеживания выполнения задания
+    is_equal = models.BooleanField(default=False, editable=False) # проверяет правильность ответа
+    is_answer_correct = models.BooleanField(default=False, editable=False, verbose_name='Ответ верный')  # Поле для хранения результата
+
+    def save(self, *args, **kwargs):
+        # Проверяем, заполнены ли оба поля и вычисляем результат
+        if self.answer_user and self.task.answer:
+            self.is_answer_correct = (self.answer_user == self.task.answer)
+        else:
+            self.is_answer_correct = False
+        super().save(*args, **kwargs)
+
+    '''
+    def is_answer_correct(self):
+        return (self.answer_user == self.task.answer)
+'''
 
     class Meta:
         unique_together = ('user', 'task')  # Уникальность задания для каждого пользователя

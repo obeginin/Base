@@ -13,7 +13,7 @@ admin.site.register(Task, TaskAdmin)
 
 class MyUserTaskAdmin(admin.ModelAdmin):
 # Поля, отображаемые в списке пользователей в админке
-    list_display = ('user', 'task', 'completed', 'answer_user', 'task_answer', 'solution_user', 'task_solution', 'task_image')
+    list_display = ('user', 'task', 'completed', 'is_answer_correct', 'answer_user', 'task_answer', 'solution_user', 'task_solution', 'task_image')
     list_filter = ('user', 'task', 'completed')
 # Методы для отображения полей из связанных моделей
 # указывается название модели_название поля
@@ -29,6 +29,15 @@ class MyUserTaskAdmin(admin.ModelAdmin):
         return obj.task.solution
     task_solution.short_description = 'решение'
 
+
+
+'''
+    def is_answer_correct(self, obj):
+        return obj.is_answer_correct
+    is_answer_correct.boolean = True  # Показывать как булев флажок
+    task_solution.short_description = 'Верно'
+
+'''
 
 admin.site.register(UserTask, MyUserTaskAdmin)
 
