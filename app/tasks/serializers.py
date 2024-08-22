@@ -1,7 +1,7 @@
 # сериализаторы используются для преобразования данных между форматами, такими как JSON
 # Для взаимодействия с API
 from rest_framework import serializers
-from .models import Task
+from .models import Task, UserTask
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,3 +19,9 @@ class TaskSerializer(serializers.ModelSerializer):
         if value < 1000 or value > 9999:
             raise serializers.ValidationError('The number must be a 4-digit integer.')
         return value
+
+# сериализатор для модели UserTask, где пользователь может добавлять свое решение через Api
+class UserTaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserTask
+        fields = ['user', 'task', 'answer_user', 'solution_user']
