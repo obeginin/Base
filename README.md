@@ -10,3 +10,5 @@ sudo usermod -aG docker $USER ( $USER поменять на своего)
 собрать и запустить проект docker-compose up --build
 
 
+Пароль для админки django root/root
+сайт работает на 8001 порту.
