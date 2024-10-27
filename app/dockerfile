@@ -1,0 +1,27 @@
+FROM python:3.11-slim
+
+SHELL ["/bin/bash", "-c"]
+
+
+RUN pip install --upgrade pip \
+    && apt update
+RUN useradd -rms /bin/bash code && chmod 777 /opt /run # создаём пользователя с правами root
+RUN mkdir code
+WORKDIR /code
+
+# создаём каалоги для статики, медиа и меняем владельца
+RUN mkdir /code/static && mkdir /code/media && chown -R code:code /code && chmod 755 /code
+COPY --chown=code:code . .
+
+
+RUN pip install -r requirements.txt # устанавливаем библиотеки
+
+
+USER code
+CMD python manage.py makemigrations \
+    && python manage.py migrate \
+    && python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.filter(login='root').exists() or User.objects.create_superuser('root', 'root')" \
+    && python manage.py collectstatic --no-input \
+    && gunicorn app.wsgi:application --bind 0.0.0.0:8000 --log-level info
+
+
