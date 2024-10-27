@@ -3,6 +3,7 @@ from django.urls import path, include
 from rest_framework.authtoken.views import obtain_auth_token
 
 
+
 # GET /api/tasks/: Получить список всех задач.
 # POST /api/tasks/: Создать новую задачу.
 # GET /api/tasks/{id}/: Получить конкретную задачу по ID.
@@ -15,4 +16,5 @@ urlpatterns = [
     path('api/', include('tasks.urls')),  # Добавление маршрутов API для задач
     path('api/', include('users.urls')),  # подключаем маршруты API для users
     path('api/token/', obtain_auth_token, name='api_token_auth'),  # для получения токена
+    #path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

@@ -9,7 +9,7 @@ data = {
 }
 
 response = requests.post(url, data=data)
-
+print(response.status_code)
 # Проверка успешности получения токена
 if response.status_code == 200:
     token = response.json().get("access_token")  # Токен доступа
