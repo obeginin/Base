@@ -1,4 +1,4 @@
-1. Установите виртуальное окружение sudo apt install python3-venv
+ob1. Установите виртуальное окружение sudo apt install python3-venv
 2. Активируйте виртуальное окружение source myenv/bin/activate
 2. Скачать проект в папку на своем ПК git clone https://github.com/obeginin/Base.git
 3. установить docker и docker-compose для запуска
