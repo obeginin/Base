@@ -1,10 +1,10 @@
 from django.apps import AppConfig
 #import users.signals
-#import os
+import os
 class UsersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'users'
+    name = 'myapp'
 
     def ready(self):
-        #os.system('python /users/signals.py')
-        import users.signals # Подключаем файл с сигналами
+        os.system('python /users/signals.py')
+        import signals # Подключаем файл с сигналами

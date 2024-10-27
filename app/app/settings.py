@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'app', # приложение основное
     'tasks', # приложение задачи
     'users', # приложение польователи
+    'app.users.apps.UsersConfig' # Используйте класс сигнала
 ]
 
 REST_FRAMEWORK = {

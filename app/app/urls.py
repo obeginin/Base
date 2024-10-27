@@ -15,6 +15,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),     # Стандартный URL для административного интерфейса
     path('api/', include('tasks.urls')),  # Добавление маршрутов API для задач
     path('api/', include('users.urls')),  # подключаем маршруты API для users
-    path('api/token/', obtain_auth_token, name='api_token_auth'),  # для получения токена
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),  # для получения токена
     #path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

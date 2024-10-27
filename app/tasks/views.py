@@ -14,7 +14,7 @@ from .serializers import TaskSerializer, UserTaskSerializer # мпорт сер�
 
 # ModelViewSet автоматически связывается с URL-адресами, если вы используете маршрутизатор в вашем urls.pyS
 class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all() # берем все аобъекты нашей модели Task
+    queryset = Task.objects.all() # берем все объекты нашей модели Task
     serializer_class = TaskSerializer
 
 # добавляем логику для получения и редактирования задач пользователя
